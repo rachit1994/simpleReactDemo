@@ -7,7 +7,6 @@ import HeaderComponent from 'components/Header';
 
 class Header extends React.PureComponent {
   render() {
-    console.log('userr', this.props.user);
     const { user } = this.props;
     if(user && user.email && user.email.length > 0) {
       this.props.options.push({

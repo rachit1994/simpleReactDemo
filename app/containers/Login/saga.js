@@ -11,7 +11,6 @@ import { setUserDetails } from 'containers/signedInUser/action';
 
 export function* setContact(props) {
   const requestURL = '/login';
-  console.log('props', props);
   const options = {
     method: 'POST',
     cache: 'default',
@@ -29,7 +28,6 @@ export function* setContact(props) {
 
     // open success message alert
     yield put(isOpenAlert(true));
-    console.log('props.obj', props.obj);
     yield put(setUserDetails(props.obj));
   } catch (err) {
     // yield put(setAlertMessage({

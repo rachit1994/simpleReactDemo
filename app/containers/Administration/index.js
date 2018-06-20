@@ -15,7 +15,6 @@ import { getUser } from 'containers/signedInUser/selector';
 
 class Administration extends React.PureComponent {
   render() {
-    console.log('table', this.props.table);
     const { user, table } = this.props;
     if(user && user.email && user.email.length > 0) {
       return (

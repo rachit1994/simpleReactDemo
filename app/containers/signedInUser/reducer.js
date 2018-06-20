@@ -12,7 +12,6 @@ const initialState = fromJS({
 function signedInUserReducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER_DETAILS:
-      console.log('action.value', action.value);
       return state.setIn(['user', 'email'], action.value.email)
     default:
       return state;

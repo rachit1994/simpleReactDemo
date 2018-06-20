@@ -22,12 +22,10 @@ class Contact extends React.PureComponent {
   }
 
   handleChange(value, name, validate) {
-    console.log('name, validate', value, name, validate);
     this.props.setFields(name, value);
   }
 
   handleSubmit() {
-    console.log('here', this.props.fieldValue);
     this.props.callApi(this.props.fieldValue);
   }
 

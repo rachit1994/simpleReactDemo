@@ -16,7 +16,6 @@ export function setError(field, error) {
 }
 
 export function callAPI(obj) {
-  console.log('calling api', obj)
   return {
     type: CALL_API,
     obj

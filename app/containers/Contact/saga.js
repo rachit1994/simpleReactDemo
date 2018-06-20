@@ -11,9 +11,7 @@ import { setFields } from 'containers/Administration/action';
 // import url from 'api/urls.json';
 
 export function* setContact(props) {
-  console.log('.........');
   const requestURL = '/setContact';
-  console.log('props', props);
   const options = {
     method: 'POST',
     cache: 'default',

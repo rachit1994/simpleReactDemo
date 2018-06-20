@@ -10,7 +10,6 @@ const initialState = fromJS({
 function contactReducer(state = initialState, action) {
   switch (action.type) {
     case SET_FIELDS:
-      console.log('setting fields', action.value);
       return state.update('table', value => value.push(action.value))
     default:
       return state;
