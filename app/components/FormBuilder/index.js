@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-const FormBuilder = ({ labels, handleOnChange, values, error, errorText, submitForm }) => (
+const FormBuilder = ({ labels, handleOnChange, values, error, submitForm }) => (
   <form>
     {
       labels &&
@@ -20,8 +20,8 @@ const FormBuilder = ({ labels, handleOnChange, values, error, errorText, submitF
           margin="normal"
           fullWidth
           required
-          helperText={error && error[obj.name] && errorText[obj.name]}
-          error={error && error[obj.name]}
+          helperText={error && error[obj.name]}
+          error={error && error[obj.name] ? true : false}
         />
       ))
     }

@@ -10,7 +10,7 @@ export function setFields(field, value) {
 
 export function setError(field, error) {
   return {
-    type: CREATE_USER,
+    type: SET_ERROR,
     field, error
   };
 }

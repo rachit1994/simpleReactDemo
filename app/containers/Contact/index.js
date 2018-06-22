@@ -11,6 +11,7 @@ import injectSaga from 'utils/injectSaga';
 import reducer from './reducer';
 import { setFields, setError, callAPI } from './action';
 import { getContact, getContactError } from './selector';
+import formValidation from 'utils/formValidation';
 
 import saga from './saga';
 
@@ -18,19 +19,9 @@ class Contact extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    this.formValidate = this.formValidate.bind(this);
 
-  handleChange(value, name, validate) {
-    this.props.setFields(name, value);
-  }
-
-  handleSubmit() {
-    this.props.callApi(this.props.fieldValue);
-  }
-
-  render() {
-    const fields = [
+    this.fields = [
       {
         label: 'First Name',
         name: 'fName',
@@ -69,7 +60,7 @@ class Contact extends React.PureComponent {
       {
         label: 'Zip',
         name: 'zip',
-        validate: ['required']
+        validate: ['required', 'canadianZip']
       },
       {
         label: 'Country',
@@ -82,13 +73,43 @@ class Contact extends React.PureComponent {
         validate: ['required']
       }
     ];
+  }
 
+  handleChange(value, name, validate) {
+    this.props.setFields(name, value);
+  }
+
+  formValidate() {
+    const { fieldValue, setError } = this.props;
+    let valid = true;
+    this.fields.map((values) => {
+      setError(values.name, '');
+      values.validate.map((v) => {
+        if(!formValidation[v](fieldValue[values.name])) {
+          console.log('inside if', v);
+          valid = false;
+          let message = 'This field has error';
+          if(v == 'required') {
+            message = 'This field is required';
+          }
+          console.log('message', message);
+          setError(values.name, message);
+        }
+      });
+    });
+    if(valid) {
+      this.props.callApi(this.props.fieldValue);
+    }
+  }
+
+  render() {
     return (
       <Form
         title="Create new user"
-        fields={fields}
+        fields={this.fields}
         handleOnChange={this.handleChange}
-        handleSubmit={this.handleSubmit}
+        handleSubmit={this.formValidate}
+        errors={this.props.errors}
       />
     )
   }
@@ -97,12 +118,14 @@ class Contact extends React.PureComponent {
 export function mapDispatchToProps(dispatch) {
   return {
     setFields: (name, value) => dispatch(setFields(name, value)),
+    setError: (field, error) => dispatch(setError(field, error)),
     callApi: (fields) => dispatch(callAPI(fields)),
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  fieldValue: getContact()
+  fieldValue: getContact(),
+  errors: getContactError(),
 });
 
 const withConnect = connect(

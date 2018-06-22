@@ -15,9 +15,7 @@ const getContact = () =>
 
 const getContactError = (field) =>
   createSelector(getState, error => {
-    let select = ['field'];
-    select.push(field);
-    return error.getIn(select);
+    return error.get('error').toJS();
   });
 
 export { getState, getContact, getContactError };
